@@ -1,5 +1,11 @@
-import {useState, useEffect} from 'react';
-import {StyleSheet, SafeAreaView, ScrollView, ToastAndroid} from 'react-native';
+import {useState} from 'react';
+import {
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  ToastAndroid,
+} from 'react-native';
 import {
   Appbar,
   Menu,
@@ -28,11 +34,12 @@ const CreateTrip = ({navigation}) => {
   );
 
   const [openMenu, setOpenMenu] = useState(false);
+  const [successModal, setSuccessModal] = useState(false);
 
   const [showIsRequireAssessment, setShowIsRequireAssessment] = useState(false);
   const [showStatus, setShowStatus] = useState(false);
+
   const [date, setDate] = useState(new Date());
-  const [successModal, setSuccessModal] = useState(false);
 
   const [tripName, setTripName] = useState('');
   const [tripDestination, setTripDestination] = useState('');
@@ -68,16 +75,6 @@ const CreateTrip = ({navigation}) => {
     },
   ];
 
-  useEffect(() => {
-    databaseHelper.transaction(tx => {
-      tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS ' +
-          'trips ' +
-          '(id INTEGER PRIMARY KEY AUTOINCREMENT, tripName TEXT, tripDestination TEXT, vehicle TEXT, requireAssessment TEXT, dateOfTrip TEXT, description TEXT, status TEXT);',
-      );
-    });
-  }, []);
-
   insertData = () => {
     if (
       tripName == '' ||
@@ -85,7 +82,6 @@ const CreateTrip = ({navigation}) => {
       vehicle == '' ||
       requireAssessment == '' ||
       dateOfTrip == '' ||
-      description == '' ||
       status == ''
     ) {
       ToastAndroid.show('Please input all required field', ToastAndroid.SHORT);
@@ -99,6 +95,7 @@ const CreateTrip = ({navigation}) => {
             vehicle,
             requireAssessment,
             dateOfTrip,
+            description,
             status,
           ],
           (tx, results) => {
@@ -159,6 +156,7 @@ const CreateTrip = ({navigation}) => {
           <Menu.Item onPress={() => {}} title="Item 1" />
         </Menu>
       </Appbar.Header>
+
       <Portal>
         <Dialog visible={successModal}>
           <Dialog.Title>Create Trip Successfully</Dialog.Title>
@@ -170,27 +168,42 @@ const CreateTrip = ({navigation}) => {
             <Paragraph>{`Date Of Trip: ${moment(dateOfTrip).format(
               'L',
             )}`}</Paragraph>
-            <Paragraph>{`Description: ${description}`}</Paragraph>
             <Paragraph>{`Status: ${status}`}</Paragraph>
+            <Paragraph>
+              {description !== '' && `Description: ${description}`}
+            </Paragraph>
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={() => navigation.goBack()}>Done</Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>
+
       <SafeAreaView style={styles.CreateTrip}>
         <ScrollView>
           <TextInput
+            maxLength={45}
             mode="outlined"
-            label="Trip Name"
+            label={
+              <Text>
+                Trip Name
+                <Text style={{color: '#b61827'}}> *</Text>
+              </Text>
+            }
             value={tripName}
             onChangeText={tripName => setTripName(tripName)}
             style={{marginVertical: 10}}
           />
 
           <TextInput
+            maxLength={45}
             mode="outlined"
-            label="Trip Destination"
+            label={
+              <Text>
+                Trip Destination
+                <Text style={{color: '#b61827'}}> *</Text>
+              </Text>
+            }
             value={tripDestination}
             onChangeText={tripDestination =>
               setTripDestination(tripDestination)
@@ -198,15 +211,26 @@ const CreateTrip = ({navigation}) => {
           />
 
           <TextInput
+            maxLength={45}
             mode="outlined"
-            label="Vehicle"
+            label={
+              <Text>
+                Vehicle
+                <Text style={{color: '#b61827'}}> *</Text>
+              </Text>
+            }
             value={vehicle}
             onChangeText={vehicle => setVehicle(vehicle)}
             style={{marginVertical: 10}}
           />
 
           <DropDown
-            label={'Require Risk Assessment'}
+            label={
+              <Text>
+                Require Risk Assessment
+                <Text style={{color: '#b61827'}}> *</Text>
+              </Text>
+            }
             mode={'outlined'}
             visible={showIsRequireAssessment}
             showDropDown={() => setShowIsRequireAssessment(true)}
@@ -214,19 +238,28 @@ const CreateTrip = ({navigation}) => {
             value={requireAssessment}
             setValue={setRequireAssessment}
             list={isRequireAssessment}
-            dropDownStyle={{margin: 5}}
           />
 
           <TextInput
             onTouchStart={() => showDatePicker()}
             mode="outlined"
-            label="Date of Trip"
+            label={
+              <Text>
+                Date of Trip
+                <Text style={{color: '#b61827'}}> *</Text>
+              </Text>
+            }
             value={dateOfTrip && moment(dateOfTrip).format('L')}
             style={{marginVertical: 10}}
           />
 
           <DropDown
-            label={'Status'}
+            label={
+              <Text>
+                Status
+                <Text style={{color: '#b61827'}}> *</Text>
+              </Text>
+            }
             mode={'outlined'}
             visible={showStatus}
             showDropDown={() => setShowStatus(true)}
@@ -237,6 +270,7 @@ const CreateTrip = ({navigation}) => {
           />
 
           <TextInput
+            maxLength={225}
             mode="outlined"
             label="Description"
             multiline={true}

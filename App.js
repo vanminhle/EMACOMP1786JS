@@ -9,6 +9,7 @@ import EditTrip from './screen/EditTrip';
 import CreateTrip from './screen/CreateTrip';
 
 LogBox.ignoreLogs(['Warning: ...']);
+console.disableYellowBox = true;
 
 const Stack = createStackNavigator();
 
