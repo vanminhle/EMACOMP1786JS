@@ -20,18 +20,12 @@ function App() {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
-            // headerStyle: {
-            //   backgroundColor: '#264d9b',
-            // },
-            // headerTintColor: '#fff',
             headerShown: false,
           }}>
           <Stack.Screen
             name="ListTrips"
             component={ListTrips}
             options={{
-              // title: 'Expense Management',
-              // headerTitleAlign: 'center',
               headerShown: false,
             }}
           />
@@ -39,8 +33,6 @@ function App() {
             name="EditTrip"
             component={EditTrip}
             options={{
-              // title: 'Edit Trip',
-              // headerTitleAlign: 'center',
               headerShown: false,
             }}
           />
@@ -48,8 +40,6 @@ function App() {
             name="CreateTrip"
             component={CreateTrip}
             options={{
-              // title: 'Create Trip',
-              // headerTitleAlign: 'center',
               headerShown: false,
             }}
           />

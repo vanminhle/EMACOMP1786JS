@@ -113,8 +113,7 @@ const CreateTrip = ({navigation}) => {
   };
 
   onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setDateOfTrip(currentDate);
+    setDateOfTrip(selectedDate.toString());
   };
 
   showMode = currentMode => {

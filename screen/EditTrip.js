@@ -76,7 +76,7 @@ const EditTrip = ({route, navigation}) => {
     setVehicle(route.params.vehicle);
     setRequireAssessment(route.params.requireAssessment);
     setDateOfTrip(route.params.dateOfTrip);
-    setDescription(route.params.requireAssessment);
+    setDescription(route.params.description);
     setStatus(route.params.status);
   }, []);
 
@@ -85,15 +85,48 @@ const EditTrip = ({route, navigation}) => {
       tx.executeSql('DELETE FROM trips where id=?', [id], (tx, results) => {
         if (results.rowsAffected > 0) {
           ToastAndroid.show('Delete trip successfully', ToastAndroid.SHORT);
+        } else {
+          ToastAndroid.show(
+            'Problem when deleting trip! Please try again',
+            ToastAndroid.SHORT,
+          );
         }
       });
     });
     navigation.goBack();
   };
 
+  editTrip = () => {
+    databaseHelper.transaction(tx => {
+      tx.executeSql(
+        'UPDATE Trips set tripName=?, tripDestination=?, vehicle=?, requireAssessment=?, dateOfTrip=?, description=?, status=? where id=?',
+        [
+          tripName,
+          tripDestination,
+          vehicle,
+          requireAssessment,
+          dateOfTrip,
+          description,
+          status,
+          id,
+        ],
+        (tx, results) => {
+          if (results.rowsAffected > 0) {
+            navigation.goBack();
+            ToastAndroid.show('Trip edited successfully', ToastAndroid.SHORT);
+          } else {
+            ToastAndroid.show(
+              'Problem when editing trip! Please try again',
+              ToastAndroid.SHORT,
+            );
+          }
+        },
+      );
+    });
+  };
+
   onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setDateOfTrip(currentDate);
+    setDateOfTrip(selectedDate.toString());
   };
 
   showMode = currentMode => {
@@ -117,11 +150,7 @@ const EditTrip = ({route, navigation}) => {
       <Appbar.Header>
         <Appbar.BackAction title="Back" onPress={() => navigation.goBack()} />
         <Appbar.Content title="Edit Trip" />
-        <Appbar.Action
-          icon="check"
-          onPress={this.navigateToScreen}
-          title="Edit Trip"
-        />
+        <Appbar.Action icon="check" onPress={editTrip} title="Edit Trip" />
         <Menu
           visible={openMenu}
           onDismiss={menuDrawer}

@@ -61,7 +61,7 @@ const ListTrips = ({navigation}) => {
           },
         );
       });
-    }, [isFocused, trips]),
+    }, [isFocused]),
   );
 
   deleteAllTrip = () => {
@@ -179,8 +179,7 @@ const ListTrips = ({navigation}) => {
                       Vehicle: {item.vehicle}
                     </Text>
                     <Text style={styles.itemsStyle}>
-                      Date Of Trip:
-                      {moment(item.dateOfTrip).format('L')}
+                      Date Of Trip: {moment(item.dateOfTrip).format('L')}
                     </Text>
                     <Text style={styles.itemsStyle}>
                       Require Risk Assessment: {item.requireAssessment}
