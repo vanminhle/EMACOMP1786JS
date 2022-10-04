@@ -10,7 +10,6 @@ import {Appbar, Menu, TextInput} from 'react-native-paper';
 import DropDown from 'react-native-paper-dropdown';
 import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
 import moment from 'moment';
-import 'react-native-gesture-handler';
 import {openDatabase} from 'react-native-sqlite-storage';
 
 import 'react-native-gesture-handler';
@@ -80,7 +79,7 @@ const EditTrip = ({route, navigation}) => {
     setStatus(route.params.status);
   }, []);
 
-  deleteTrip = () => {
+  const deleteTrip = () => {
     databaseHelper.transaction(tx => {
       tx.executeSql('DELETE FROM trips where id=?', [id], (tx, results) => {
         if (results.rowsAffected > 0) {
@@ -96,7 +95,7 @@ const EditTrip = ({route, navigation}) => {
     navigation.goBack();
   };
 
-  editTrip = () => {
+  const editTrip = () => {
     databaseHelper.transaction(tx => {
       tx.executeSql(
         'UPDATE Trips set tripName=?, tripDestination=?, vehicle=?, requireAssessment=?, dateOfTrip=?, description=?, status=? where id=?',
@@ -125,11 +124,11 @@ const EditTrip = ({route, navigation}) => {
     });
   };
 
-  onChange = (event, selectedDate) => {
+  const onChange = (event, selectedDate) => {
     setDateOfTrip(selectedDate.toString());
   };
 
-  showMode = currentMode => {
+  const showMode = currentMode => {
     DateTimePickerAndroid.open({
       value: date,
       onChange,
@@ -137,11 +136,11 @@ const EditTrip = ({route, navigation}) => {
     });
   };
 
-  showDatePicker = () => {
+  const showDatePicker = () => {
     showMode('date');
   };
 
-  menuDrawer = () => {
+  const menuDrawer = () => {
     setOpenMenu(!openMenu);
   };
 

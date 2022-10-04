@@ -18,7 +18,6 @@ import {
 import DropDown from 'react-native-paper-dropdown';
 import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
 import moment from 'moment';
-import 'react-native-gesture-handler';
 import {openDatabase} from 'react-native-sqlite-storage';
 
 const CreateTrip = ({navigation}) => {
@@ -75,7 +74,7 @@ const CreateTrip = ({navigation}) => {
     },
   ];
 
-  insertData = () => {
+  const insertData = () => {
     if (
       tripName == '' ||
       tripDestination == '' ||
@@ -112,11 +111,11 @@ const CreateTrip = ({navigation}) => {
     }
   };
 
-  onChange = (event, selectedDate) => {
+  const onChange = (event, selectedDate) => {
     setDateOfTrip(selectedDate.toString());
   };
 
-  showMode = currentMode => {
+  const showMode = currentMode => {
     DateTimePickerAndroid.open({
       value: date,
       onChange,
@@ -124,11 +123,11 @@ const CreateTrip = ({navigation}) => {
     });
   };
 
-  showDatePicker = () => {
+  const showDatePicker = () => {
     showMode('date');
   };
 
-  menuDrawer = () => {
+  const menuDrawer = () => {
     setOpenMenu(!openMenu);
   };
 

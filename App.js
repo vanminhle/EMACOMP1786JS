@@ -1,4 +1,3 @@
-import 'react-native-gesture-handler';
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -13,7 +12,7 @@ console.disableYellowBox = true;
 
 const Stack = createStackNavigator();
 
-function App() {
+const App = () => {
   return (
     <>
       <StatusBar backgroundColor="#264d9b" barStyle="light-content" />
@@ -47,6 +46,6 @@ function App() {
       </NavigationContainer>
     </>
   );
-}
+};
 
 export default App;

@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Appbar, Menu} from 'react-native-paper';
-import 'react-native-gesture-handler';
 import {openDatabase} from 'react-native-sqlite-storage';
 import {useFocusEffect} from '@react-navigation/native';
 import moment from 'moment';
@@ -63,13 +62,13 @@ const ListTrips = ({navigation}) => {
     }, []),
   );
 
-  deleteAllTrip = () => {
+  const deleteAllTrip = () => {
     databaseHelper.transaction(tx => {
       tx.executeSql('DELETE FROM trips');
     });
   };
 
-  editTrip = (
+  const editTrip = (
     id,
     tripName,
     tripDestination,
@@ -91,15 +90,15 @@ const ListTrips = ({navigation}) => {
     });
   };
 
-  navigateToScreen = () => {
+  const navigateToScreen = () => {
     navigation.navigate('CreateTrip');
   };
 
-  menuDrawer = () => {
+  const menuDrawer = () => {
     setOpenMenu(!openMenu);
   };
 
-  listViewItemSeparator = () => {
+  const listViewItemSeparator = () => {
     return (
       <View
         style={{
@@ -117,7 +116,7 @@ const ListTrips = ({navigation}) => {
         <Appbar.Content title="Trip Management" />
         <Appbar.Action
           icon="plus"
-          onPress={this.navigateToScreen}
+          onPress={navigateToScreen}
           title="Create New Trip"
         />
         <Menu
