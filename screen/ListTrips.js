@@ -10,7 +10,7 @@ import {
 import {Appbar, Menu} from 'react-native-paper';
 import 'react-native-gesture-handler';
 import {openDatabase} from 'react-native-sqlite-storage';
-import {useIsFocused, useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 import moment from 'moment';
 
 const ListTrips = ({navigation}) => {
@@ -18,7 +18,6 @@ const ListTrips = ({navigation}) => {
   const [trips, setTrips] = useState([]);
   const [emptyTrip, setEmptyTrip] = useState(false);
 
-  const isFocused = useIsFocused();
   moment.suppressDeprecationWarnings = true;
 
   const databaseHelper = openDatabase(
@@ -61,7 +60,7 @@ const ListTrips = ({navigation}) => {
           },
         );
       });
-    }, [isFocused]),
+    }, []),
   );
 
   deleteAllTrip = () => {
