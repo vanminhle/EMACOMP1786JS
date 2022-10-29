@@ -135,29 +135,17 @@ const CreateTrip = ({navigation}) => {
     <>
       <Appbar.Header>
         <Appbar.BackAction title="Back" onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Create New Trip" />
+        <Appbar.Content title="Adding New Trip" />
         <Appbar.Action
           icon="check"
           onPress={insertData}
-          title="Create New Trip"
+          title="Adding New Trip"
         />
-        <Menu
-          visible={openMenu}
-          onDismiss={menuDrawer}
-          anchor={
-            <Appbar.Action
-              icon="dots-vertical"
-              color="white"
-              onPress={menuDrawer}
-            />
-          }>
-          <Menu.Item onPress={() => {}} title="Item 1" />
-        </Menu>
       </Appbar.Header>
 
       <Portal>
         <Dialog visible={successModal}>
-          <Dialog.Title>Create Trip Successfully</Dialog.Title>
+          <Dialog.Title>Adding Trip Successfully</Dialog.Title>
           <Dialog.Content>
             <Paragraph>{`Name: ${tripName}`}</Paragraph>
             <Paragraph>{`Destination: ${tripDestination}`}</Paragraph>

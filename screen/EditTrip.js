@@ -96,32 +96,43 @@ const EditTrip = ({route, navigation}) => {
   };
 
   const editTrip = () => {
-    databaseHelper.transaction(tx => {
-      tx.executeSql(
-        'UPDATE Trips set tripName=?, tripDestination=?, vehicle=?, requireAssessment=?, dateOfTrip=?, description=?, status=? where id=?',
-        [
-          tripName,
-          tripDestination,
-          vehicle,
-          requireAssessment,
-          dateOfTrip,
-          description,
-          status,
-          id,
-        ],
-        (tx, results) => {
-          if (results.rowsAffected > 0) {
-            navigation.goBack();
-            ToastAndroid.show('Trip edited successfully', ToastAndroid.SHORT);
-          } else {
-            ToastAndroid.show(
-              'Problem when editing trip! Please try again',
-              ToastAndroid.SHORT,
-            );
-          }
-        },
-      );
-    });
+    if (
+      tripName == '' ||
+      tripDestination == '' ||
+      vehicle == '' ||
+      requireAssessment == '' ||
+      dateOfTrip == '' ||
+      status == ''
+    ) {
+      ToastAndroid.show('Please input all required field', ToastAndroid.SHORT);
+    } else {
+      databaseHelper.transaction(tx => {
+        tx.executeSql(
+          'UPDATE Trips set tripName=?, tripDestination=?, vehicle=?, requireAssessment=?, dateOfTrip=?, description=?, status=? where id=?',
+          [
+            tripName,
+            tripDestination,
+            vehicle,
+            requireAssessment,
+            dateOfTrip,
+            description,
+            status,
+            id,
+          ],
+          (tx, results) => {
+            if (results.rowsAffected > 0) {
+              navigation.goBack();
+              ToastAndroid.show('Trip edited successfully', ToastAndroid.SHORT);
+            } else {
+              ToastAndroid.show(
+                'Problem when editing trip! Please try again',
+                ToastAndroid.SHORT,
+              );
+            }
+          },
+        );
+      });
+    }
   };
 
   const onChange = (event, selectedDate) => {

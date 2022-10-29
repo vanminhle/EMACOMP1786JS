@@ -66,6 +66,8 @@ const ListTrips = ({navigation}) => {
     databaseHelper.transaction(tx => {
       tx.executeSql('DELETE FROM trips');
     });
+    setTrips([]);
+    setEmptyTrip(true);
   };
 
   const editTrip = (
